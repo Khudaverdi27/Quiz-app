@@ -6,6 +6,7 @@ html{
     height:100%;
 }
 
+
 body {
     background-image: linear-gradient( 95.2deg, rgba(173,252,234,1) 26.8%, rgba(192,229,246,1) 64% );
     margin:0;
@@ -13,7 +14,21 @@ body {
     display: flex;
     justify-content: center;
     box-sizing:border-box;
+    
 }
+
+select {
+  /* Reset */
+  appearance: none;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  /* Personalize */
+  width: 20rem;
+  padding: 1rem 4rem 1rem 1rem;
+
+}
+
 `;
 
 export const Wrapper = styled.div`
@@ -31,8 +46,8 @@ export const Wrapper = styled.div`
     text-shadow: 0 1px 0px #378ab4, 1px 0 0px #5dabcd, 1px 2px 1px #378ab4;
   }
   h1 {
-    font-size: 70px;
-    margin: 20px;
+    font-size: 60px;
+    margin: 10px;
     text-align: center;
     text-shadow: 1px 1px 1px #000, 3px 3px 5px blue;
     color: white;

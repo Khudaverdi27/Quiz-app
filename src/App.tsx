@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import QuestionCard from "./components/Questions";
-import { Diffuculty, fetchQuestions, QuestionState } from "./Api";
+import { fetchQuestions, QuestionState } from "./Api";
 import { GlobalStyle, Wrapper } from "./App.style";
 
 const TOTAL_QUESTION = 10;
@@ -19,16 +19,24 @@ function App() {
   const [userAnswer, setUserAnswer] = useState<AnswerObject[]>([]);
   const [score, setScore] = useState(0);
   const [gameover, setgameover] = useState(true);
+  const [selectDiffuclty, setSelectDiffuculty] = useState("easy");
+  const [showDiffuclty, setShowDiffuclty] = useState(true);
 
   const stratTrivia = async () => {
+    setShowDiffuclty(false);
     setLoading(true), setgameover(false);
-    const newQuestion = await fetchQuestions(TOTAL_QUESTION, Diffuculty.EASY);
+    const newQuestion = await fetchQuestions(TOTAL_QUESTION, selectDiffuclty);
     setQuestion(newQuestion);
     setScore(0);
     setUserAnswer([]);
     setNumber(0);
     setLoading(false);
   };
+
+  const getValue = (value: string) => {
+    setSelectDiffuculty(value);
+  };
+
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!gameover) {
       const answer = e.currentTarget.value;
@@ -59,13 +67,25 @@ function App() {
     <>
       <GlobalStyle />
       <Wrapper>
-        <h1>Quiz app by trivia</h1>
+        <h1>Quiz app </h1>
+        {showDiffuclty && (
+          <select onChange={(e) => getValue(e.target.value)}>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        )}
         {(gameover || userAnswer.length === TOTAL_QUESTION) && (
           <button onClick={stratTrivia} className="start">
             Start
           </button>
         )}
-        {!gameover && <p className="score">score:{score}</p>}
+        {!gameover && (
+          <>
+            <p className="score">Score:{score}</p>
+            <p className="score">Diffuculty:{selectDiffuclty}</p>
+          </>
+        )}
         {loading && <p>loading...</p>}
         {!loading && !gameover && (
           <QuestionCard

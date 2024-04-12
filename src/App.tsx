@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import QuestionCard from "./components/Questions";
 import { Diffuculty, fetchQuestions, QuestionState } from "./Api";
+import { GlobalStyle, Wrapper } from "./App.style";
 
 const TOTAL_QUESTION = 10;
 
@@ -55,34 +56,37 @@ function App() {
   };
 
   return (
-    <div>
-      <h1>Quiz app by trivia</h1>
-      {(gameover || userAnswer.length === TOTAL_QUESTION) && (
-        <button onClick={stratTrivia} className="start">
-          Start
-        </button>
-      )}
-      {!gameover && <p className="score">score:{score}</p>}
-      {loading && <p>loading...</p>}
-      {!loading && !gameover && (
-        <QuestionCard
-          questionNumber={number + 1}
-          totalQuestions={TOTAL_QUESTION}
-          question={question[number]?.question}
-          answers={question[number]?.answers}
-          userAnswer={userAnswer[number] || undefined}
-          calback={checkAnswer}
-        />
-      )}
-      {!gameover &&
-        !loading &&
-        userAnswer.length === number + 1 &&
-        number !== TOTAL_QUESTION - 1 && (
-          <button className="next" onClick={nextQuestion}>
-            Next
+    <>
+      <GlobalStyle />
+      <Wrapper>
+        <h1>Quiz app by trivia</h1>
+        {(gameover || userAnswer.length === TOTAL_QUESTION) && (
+          <button onClick={stratTrivia} className="start">
+            Start
           </button>
         )}
-    </div>
+        {!gameover && <p className="score">score:{score}</p>}
+        {loading && <p>loading...</p>}
+        {!loading && !gameover && (
+          <QuestionCard
+            questionNumber={number + 1}
+            totalQuestions={TOTAL_QUESTION}
+            question={question[number]?.question}
+            answers={question[number]?.answers}
+            userAnswer={userAnswer[number] || undefined}
+            calback={checkAnswer}
+          />
+        )}
+        {!gameover &&
+          !loading &&
+          userAnswer.length === number + 1 &&
+          number !== TOTAL_QUESTION - 1 && (
+            <button className="next" onClick={nextQuestion}>
+              Next
+            </button>
+          )}
+      </Wrapper>
+    </>
   );
 }
 
